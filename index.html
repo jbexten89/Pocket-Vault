@@ -1,0 +1,789 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'unsafe-inline'; style-src 'unsafe-inline'; img-src data: blob:; manifest-src data:; worker-src 'self'; connect-src 'none'; form-action 'none'; base-uri 'none'">
+<meta name="referrer" content="no-referrer">
+<meta name="color-scheme" content="dark">
+<meta name="theme-color" content="#07080A">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Vault">
+<meta name="format-detection" content="telephone=no">
+<title>Pocket Vault</title>
+<style>
+:root{--bg:#07080A;--panel:#111317;--panel2:#181B20;--border:#24272E;--text:#E7E9EC;--muted:#8B919A;--accent:#3CC79A;--amber:#E3A04F;--ink:#1A1205;--danger:#E5646E;--r:14px;color-scheme:dark}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html,body{margin:0;background:var(--bg);color:var(--text);font-family:"Nunito Sans","Avenir Next",Avenir,-apple-system,BlinkMacSystemFont,system-ui,sans-serif}
+body{min-height:100vh;min-height:100dvh;-webkit-text-size-adjust:100%;overscroll-behavior-y:none}
+button{cursor:pointer;-webkit-user-select:none;user-select:none}
+input,textarea,select,button{font:inherit;font-size:16px;color:inherit}
+input,textarea,select{width:100%;background:var(--panel2);border:1px solid var(--border);border-radius:10px;padding:12px 14px;outline:none;-webkit-appearance:none;appearance:none}
+textarea{resize:vertical;line-height:1.4}
+input:focus,textarea:focus,select:focus{border-color:var(--accent)}
+input::placeholder,textarea::placeholder{color:#5D636C}
+label{display:block;font-size:13px;color:var(--muted);margin:14px 0 6px;font-weight:700}
+svg{width:22px;height:22px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;flex:none}
+svg .f{fill:currentColor;stroke:none}
+.top{position:sticky;top:0;z-index:5;display:flex;align-items:center;justify-content:space-between;padding:calc(env(safe-area-inset-top) + 8px) 8px 8px 16px;background:rgba(7,8,10,.92);-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px);border-bottom:1px solid var(--border)}
+.top h1{font-size:24px;margin:0;font-weight:800;letter-spacing:-.01em}
+main{padding:14px 16px calc(100px + env(safe-area-inset-bottom));max-width:640px;margin:0 auto}
+.tabs{position:fixed;bottom:0;left:0;right:0;display:flex;background:rgba(17,19,23,.96);-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px);border-top:1px solid var(--border);padding-bottom:env(safe-area-inset-bottom);z-index:6}
+.tabs button{flex:1;background:none;border:0;padding:9px 0 7px;color:var(--muted);display:flex;flex-direction:column;align-items:center;gap:3px;font-size:11px;font-weight:800}
+.tabs button.on{color:var(--accent)}
+.btn{display:flex;align-items:center;justify-content:center;gap:8px;min-height:50px;padding:0 18px;border-radius:12px;border:1px solid var(--border);background:var(--panel2);font-weight:800;width:100%;margin-top:10px}
+.btn svg{width:20px;height:20px}
+.btn.primary{background:var(--accent);border-color:var(--accent);color:#06140F}
+.btn.danger{color:var(--danger);border-color:rgba(229,100,110,.45);background:transparent}
+.btn.ghost{background:transparent}
+.btn.dark{background:var(--ink);border-color:var(--ink);color:var(--amber);min-height:42px;width:auto;display:inline-flex;margin-top:10px}
+.btn:disabled{opacity:.55}
+.icon{width:44px;height:44px;flex:none;display:inline-flex;align-items:center;justify-content:center;background:transparent;border:0;border-radius:10px;color:var(--muted);padding:0}
+.icon:active{background:var(--panel2)}
+.icon.accent,.icon.on{color:var(--accent)}
+.card{background:var(--panel);border:1px solid var(--border);border-radius:var(--r);padding:16px;margin-bottom:12px}
+.card h3{margin:0 0 6px;font-size:17px;font-weight:800}
+.card p{margin:0 0 4px;line-height:1.45}
+.entry{display:flex;align-items:center;gap:12px;padding:10px 4px 10px 12px;margin-bottom:8px}
+.entry:active{background:var(--panel2)}
+.av{width:42px;height:42px;border-radius:11px;background:var(--panel2);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;font-weight:800;font-size:18px;color:var(--accent);flex:none}
+.entry .meta{flex:1;min-width:0}
+.entry .t{font-weight:800;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.entry .s{font-size:13px;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;margin-top:1px}
+.acts{display:flex}
+.tag{display:inline-block;font-size:11px;font-weight:800;padding:2px 7px;border-radius:6px;margin:5px 4px 0 0}
+.tag.amber{background:var(--amber);color:var(--ink)}
+.sec{font-size:12px;font-weight:800;letter-spacing:.07em;text-transform:uppercase;color:var(--muted);margin:20px 2px 8px}
+.banner{border-radius:12px;padding:13px 14px;margin:0 0 12px;font-size:14px;line-height:1.45}
+.banner.warn{background:var(--amber);color:var(--ink)}
+.chips{display:flex;gap:8px;margin-top:10px;overflow-x:auto;scrollbar-width:none}
+.chip{border:1px solid var(--border);background:var(--panel);border-radius:999px;padding:8px 14px;font-size:14px;font-weight:800;color:var(--muted);white-space:nowrap}
+.chip.on{border-color:var(--accent);color:var(--accent)}
+.chip.amber{color:var(--amber)}
+.chip.amber.on{background:var(--amber);border-color:var(--amber);color:var(--ink)}
+.fab{position:fixed;right:18px;bottom:calc(78px + env(safe-area-inset-bottom));width:60px;height:60px;border-radius:18px;background:var(--accent);color:#06140F;border:0;display:flex;align-items:center;justify-content:center;box-shadow:0 10px 28px rgba(60,199,154,.28);z-index:5}
+.fab svg{width:28px;height:28px;stroke-width:2.5}
+.pwrow{display:flex;gap:2px;align-items:center}
+.pwrow input{flex:1;min-width:0}
+.mono{font-family:ui-monospace,"SF Mono",Menlo,monospace}
+.meter{height:6px;background:var(--panel2);border-radius:4px;margin-top:8px;overflow:hidden}
+.meter div{height:100%;width:0;transition:width .2s,background .2s}
+.small{font-size:13px}.muted{color:var(--muted)}.center{text-align:center}
+.err{color:var(--amber);font-weight:700;font-size:14px;min-height:20px;margin-top:10px}
+.auth{max-width:440px;margin:0 auto;padding:calc(env(safe-area-inset-top) + 44px) 20px calc(40px + env(safe-area-inset-bottom))}
+.auth h1{font-size:30px;font-weight:800;margin:18px 0 6px;letter-spacing:-.01em}
+.auth p{line-height:1.45}
+.logo{width:76px;height:76px;border-radius:22px;background:var(--panel);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;color:var(--accent)}
+.logo svg{width:40px;height:40px}
+.check{display:flex;gap:12px;align-items:flex-start;color:var(--text);font-size:15px;font-weight:600;margin:16px 0 4px;line-height:1.35}
+.check input{width:24px;height:24px;flex:none;margin:0;padding:0;-webkit-appearance:checkbox;appearance:auto;accent-color:var(--accent)}
+.linkbtn{background:none;border:0;color:var(--muted);font-weight:700;font-size:14px;margin-top:22px;width:100%;padding:10px;text-decoration:underline}
+#modal{position:fixed;inset:0;z-index:20;background:rgba(0,0,0,.65);display:flex;align-items:flex-end;justify-content:center}
+#modal[hidden]{display:none}
+.sheet{width:100%;max-width:640px;max-height:94vh;max-height:94dvh;overflow:auto;-webkit-overflow-scrolling:touch;background:var(--bg);border:1px solid var(--border);border-bottom:0;border-radius:20px 20px 0 0;padding-bottom:calc(20px + env(safe-area-inset-bottom))}
+.sheet-h{position:sticky;top:0;display:flex;align-items:center;justify-content:space-between;padding:8px 4px;background:var(--bg);border-bottom:1px solid var(--border);z-index:1}
+.sheet-h h2{font-size:17px;margin:0;font-weight:800}
+.sheet-b{padding:4px 16px 8px}
+.dlg{padding-top:18px}
+.dlg h2{margin:0 0 8px;font-size:21px;font-weight:800}
+.dlg p{line-height:1.45}
+.link{background:none;border:0;color:var(--muted);font-weight:800;padding:10px 14px;min-height:44px}
+.link.accent{color:var(--accent)}
+#toast{position:fixed;left:50%;bottom:calc(152px + env(safe-area-inset-bottom));transform:translate(-50%,16px);background:var(--panel2);border:1px solid var(--border);padding:11px 18px;border-radius:12px;font-weight:800;font-size:14px;opacity:0;transition:opacity .2s,transform .2s;pointer-events:none;z-index:30;max-width:90vw;text-align:center}
+#toast.show{opacity:1;transform:translate(-50%,0)}
+#toast.err{background:var(--amber);border-color:var(--amber);color:var(--ink)}
+.seg{display:flex;background:var(--panel);border:1px solid var(--border);border-radius:12px;padding:4px;margin-bottom:12px}
+.seg button{flex:1;border:0;background:none;padding:11px;border-radius:9px;font-weight:800;color:var(--muted)}
+.seg button.on{background:var(--panel2);color:var(--accent)}
+.out .big{font-size:21px;word-break:break-all;line-height:1.45;min-height:62px;padding:4px 2px 8px}
+.row{display:flex;gap:10px}.row .btn{flex:1}
+.opt{display:flex;align-items:center;justify-content:space-between;gap:12px;min-height:54px;border-bottom:1px solid var(--border);font-weight:700}
+.opt:last-child{border-bottom:0}
+.opt select{width:auto;min-width:120px;padding:9px 12px}
+.opt output{color:var(--accent);font-weight:800;font-size:18px}
+.sw{-webkit-appearance:none;appearance:none;width:52px;height:32px;border-radius:16px;background:var(--panel2);border:1px solid var(--border);position:relative;padding:0;flex:none;transition:background .2s;margin:0}
+.sw::after{content:"";position:absolute;top:3px;left:3px;width:24px;height:24px;border-radius:50%;background:var(--muted);transition:left .2s,background .2s}
+.sw:checked{background:var(--accent);border-color:var(--accent)}
+.sw:checked::after{left:23px;background:#06140F}
+input[type=range]{-webkit-appearance:auto;appearance:auto;padding:0;border:0;background:none;accent-color:var(--accent);height:34px}
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:8px}
+.stat{background:var(--panel2);border:1px solid var(--border);border-radius:12px;padding:14px 6px;text-align:center}
+.stat b{display:block;font-size:30px;font-weight:800;line-height:1.1}
+.stat span{font-size:12px;color:var(--muted);font-weight:700}
+.stat.warn b{color:var(--amber)}
+.empty{text-align:center;color:var(--muted);padding:56px 20px;line-height:1.5}
+.empty svg{width:44px;height:44px;color:var(--border);margin-bottom:8px}
+</style>
+</head>
+<body>
+<noscript><div class="auth"><h1>JavaScript required</h1></div></noscript>
+<div id="app"></div>
+<div id="modal" hidden></div>
+<div id="toast" role="status" aria-live="polite"></div>
+<input type="file" id="fileJson" accept=".json,application/json" hidden>
+<input type="file" id="fileCsv" accept=".csv,text/csv,text/plain" hidden>
+<script>
+'use strict';
+const VERSION = '1.0.0';
+const ITER = 600000;            // PBKDF2-SHA256 iterations
+const IDLE_MS = 120000;         // auto-lock after 2 minutes
+const CLIP_MS = 30000;          // clear clipboard after 30 s
+const BACKUP_DAYS = 30;
+
+/* ---------- utilities ---------- */
+const $ = s => document.querySelector(s);
+const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const str = x => typeof x === 'string' ? x : (x == null ? '' : String(x));
+const rand = n => crypto.getRandomValues(new Uint8Array(n));
+const uid = () => Array.from(rand(12), b => b.toString(16).padStart(2, '0')).join('');
+const fmt = ts => ts ? new Date(ts).toLocaleDateString(undefined, {month:'short', day:'numeric', year:'numeric'}) : '—';
+const enc = new TextEncoder(), dec = new TextDecoder();
+function b64(u){ let s = ''; for (let i = 0; i < u.length; i += 0x8000) s += String.fromCharCode.apply(null, u.subarray(i, i + 0x8000)); return btoa(s); }
+const unb64 = s => Uint8Array.from(atob(s), c => c.charCodeAt(0));
+function hostOf(u){ if(!u) return ''; try { return new URL(u.includes('://') ? u : 'https://' + u).hostname.replace(/^www\./, ''); } catch { return ''; } }
+function safeUrl(u){ if(!u) return ''; try { const p = new URL(u.includes('://') ? u : 'https://' + u); return /^https?:$/.test(p.protocol) ? p.href : ''; } catch { return ''; } }
+
+/* ---------- icons ---------- */
+const ico = {
+  lock:'<svg viewBox="0 0 24 24"><rect x="5" y="11" width="14" height="10" rx="2.5"/><path d="M8 11V7.5a4 4 0 0 1 8 0V11"/></svg>',
+  eye:'<svg viewBox="0 0 24 24"><path d="M2 12s3.6-7 10-7 10 7 10 7-3.6 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/></svg>',
+  copy:'<svg viewBox="0 0 24 24"><rect x="9" y="9" width="12" height="12" rx="2.5"/><path d="M5 15V5.5A2.5 2.5 0 0 1 7.5 3H15"/></svg>',
+  dice:'<svg viewBox="0 0 24 24"><rect x="3.5" y="3.5" width="17" height="17" rx="3.5"/><circle class="f" cx="8.5" cy="8.5" r="1.4"/><circle class="f" cx="15.5" cy="8.5" r="1.4"/><circle class="f" cx="12" cy="12" r="1.4"/><circle class="f" cx="8.5" cy="15.5" r="1.4"/><circle class="f" cx="15.5" cy="15.5" r="1.4"/></svg>',
+  user:'<svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 21c1.6-4 4.6-6 8-6s6.4 2 8 6"/></svg>',
+  key:'<svg viewBox="0 0 24 24"><circle cx="8" cy="15" r="4.5"/><path d="M11.2 11.8L20 3M16.5 6.5l3 3M14 9l2 2"/></svg>',
+  vault:'<svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="16" rx="2.5"/><circle cx="12" cy="12" r="3.5"/><path d="M12 8.5V7M15.5 12H17M12 15.5V17M8.5 12H7"/></svg>',
+  gear:'<svg viewBox="0 0 24 24"><path d="M4 6h10M18 6h2M4 12h4M12 12h8M4 18h12"/><circle cx="16" cy="6" r="2"/><circle cx="10" cy="12" r="2"/><circle cx="18" cy="18" r="2"/></svg>',
+  plus:'<svg viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg>',
+  link:'<svg viewBox="0 0 24 24"><path d="M14 4h6v6M20 4l-9 9M18 14v5a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h5"/></svg>',
+  down:'<svg viewBox="0 0 24 24"><path d="M12 4v11M7 10l5 5 5-5M5 20h14"/></svg>',
+  up:'<svg viewBox="0 0 24 24"><path d="M12 15V4M7 9l5-5 5 5M5 20h14"/></svg>'
+};
+
+/* ---------- IndexedDB (stores only ciphertext + non-secret metadata) ---------- */
+let dbP;
+function idb(){ return dbP ||= new Promise((res, rej) => { const r = indexedDB.open('pocket-vault', 1); r.onupgradeneeded = () => r.result.createObjectStore('kv'); r.onsuccess = () => res(r.result); r.onerror = () => rej(r.error); }); }
+async function dbOp(mode, fn){ const db = await idb(); return new Promise((res, rej) => { const tx = db.transaction('kv', mode); const req = fn(tx.objectStore('kv')); tx.oncomplete = () => res(req && req.result); tx.onerror = () => rej(tx.error); }); }
+const dbGet = k => dbOp('readonly', s => s.get(k));
+const dbSet = (k, v) => dbOp('readwrite', s => s.put(v, k));
+const dbDel = k => dbOp('readwrite', s => s.delete(k));
+
+/* ---------- crypto ---------- */
+async function deriveKey(pw, salt, iter){
+  const base = await crypto.subtle.importKey('raw', enc.encode(pw), 'PBKDF2', false, ['deriveKey']);
+  return crypto.subtle.deriveKey({name:'PBKDF2', hash:'SHA-256', salt, iterations:iter}, base, {name:'AES-GCM', length:256}, false, ['encrypt', 'decrypt']);
+}
+async function encryptObj(key, salt, iter, obj){
+  const iv = rand(12);
+  const ct = await crypto.subtle.encrypt({name:'AES-GCM', iv}, key, enc.encode(JSON.stringify(obj)));
+  return {v:1, kdf:'PBKDF2-SHA256', iter, salt:b64(salt), iv:b64(iv), ct:b64(new Uint8Array(ct))};
+}
+async function decryptBlob(key, blob){
+  const pt = await crypto.subtle.decrypt({name:'AES-GCM', iv:unb64(blob.iv)}, key, unb64(blob.ct));
+  return JSON.parse(dec.decode(pt));
+}
+
+/* ---------- state ---------- */
+const S = {key:null, salt:null, iter:ITER, vault:null, blob:null, meta:{}, tab:'vault', query:'', filter:null, genOut:'', editing:null, dlg:null, lastAct:0, pickerUntil:0};
+
+let saveQ = Promise.resolve();
+function save(){
+  const key = S.key, salt = S.salt, iter = S.iter, vault = S.vault;
+  if (!key || !vault) return saveQ;
+  saveQ = saveQ.then(async () => { const blob = await encryptObj(key, salt, iter, vault); await dbSet('vault', blob); if (S.key === key) S.blob = blob; })
+               .catch(e => { console.error(e); toast('Save failed — storage error', 'err'); });
+  return saveQ;
+}
+let setT; function saveSettings(){ clearTimeout(setT); setT = setTimeout(() => { if (S.key) save(); }, 800); }
+
+/* ---------- strength ---------- */
+const COMMON = ['password','123456','12345678','qwerty','letmein','welcome','admin','iloveyou','monkey','dragon','football','baseball','abc123','111111','sunshine','master','login','passw0rd','trustno1','princess','shadow','superman','michael','charlie','starwars'];
+function strength(pw){
+  if (!pw) return {score:0, bits:0, label:''};
+  let pool = 0;
+  if (/[a-z]/.test(pw)) pool += 26; if (/[A-Z]/.test(pw)) pool += 26;
+  if (/\d/.test(pw)) pool += 10; if (/[^A-Za-z0-9]/.test(pw)) pool += 33;
+  let bits = pw.length * Math.log2(pool || 1);
+  if (new Set(pw).size < pw.length / 2) bits *= 0.6;
+  if (/(.)\1\1/.test(pw)) bits *= 0.85;
+  if (/(0123|1234|2345|3456|4567|5678|6789|abcd|bcde|qwer|asdf|zxcv)/i.test(pw)) bits *= 0.8;
+  const low = pw.toLowerCase().replace(/[@4]/g,'a').replace(/3/g,'e').replace(/[1!]/g,'i').replace(/0/g,'o').replace(/[$5]/g,'s');
+  if (COMMON.some(c => low.includes(c))) bits = Math.min(bits, 20);
+  const score = bits < 28 ? 0 : bits < 40 ? 1 : bits < 60 ? 2 : bits < 80 ? 3 : 4;
+  return {score, bits:Math.round(bits), label:['Very weak','Weak','Fair','Strong','Very strong'][score]};
+}
+function meter(inp, bar, lbl){
+  const v = $('#'+inp).value, s = strength(v), b = $('#'+bar);
+  b.style.width = v ? [10,28,52,76,100][s.score] + '%' : '0';
+  b.style.background = s.score < 2 ? 'var(--danger)' : s.score < 3 ? 'var(--amber)' : 'var(--accent)';
+  if (lbl) $('#'+lbl).textContent = v ? `${s.label} · ≈${s.bits} bits` : '';
+}
+function analysis(){
+  const counts = {};
+  for (const e of S.vault.entries) if (e.password) counts[e.password] = (counts[e.password] || 0) + 1;
+  return e => ({weak: !!e.password && strength(e.password).score <= 1, reused: !!e.password && counts[e.password] > 1});
+}
+
+/* ---------- generator ---------- */
+const SETS = {upper:'ABCDEFGHIJKLMNOPQRSTUVWXYZ', lower:'abcdefghijklmnopqrstuvwxyz', num:'0123456789', sym:'!@#$%^&*()-_=+[]{};:,.?/~'};
+const AMBIG = /[Il1O0o]/g;
+const WORDS = [...new Set(('acid acorn actor adapt agent alarm album alley amber angle ankle apple apron arena armor arrow atlas attic audio award bacon badge bagel baker banjo barn basil batch beach beard beast bench berry bison blade blank blaze blend blimp bloom board boat bonus boost booth brain brass bread brick brief broom brush bucket buddy bugle cabin cable cactus camel candy canoe canyon cargo carrot cedar chalk charm cheek chess chief chili chord cider cinema circus civic clamp claw clay cliff clock cloud clover coach cobra cocoa comet coral couch crane crate crisp crown crumb cubic curve cycle daisy dance delta denim depot diary diner disco dolphin donut draft dragon drift drum dune eagle easel echo elbow ember emerald engine epic equal fable falcon fancy farm feast fence ferry fiber field fig flame flask fleet flint flute focus foggy forest fossil frame frost fudge gadget galaxy garden garlic gecko giant ginger glacier globe glove goose grain grape gravel grill guitar habit hammer harbor hazel heron hiker hobby honey hornet hotel humble igloo index iron island ivory jacket jaguar jelly jewel jigsaw jockey juice jungle kayak kernel kettle kiosk kitten koala ladder lagoon lamp lantern laser lemon lever lilac linen lizard llama lobster locket lotus lunar magnet mango maple marble meadow melon metal mimic mint mirror mocha moose mosaic motor mural mushroom napkin nectar needle nickel noodle nugget oasis ocean olive omega onion orbit otter oyster paddle panda paper parade parrot pasta peach pebble pepper piano pickle pilot pinecone pixel planet plaza pocket polar pony poppy prism pulse puzzle quartz quill radar radio raven recipe ribbon river robin rocket rodeo ruby saddle salmon sandal satin scarf scout shadow shell shrimp silver skate sketch sloth socket solar sonic spark spider sprout squid stable stamp steam stone storm sugar summit sunset swamp table tango tiger timber toast tomato topaz torch tractor trail tulip tundra turtle tuxedo umbrella unicorn valley velvet violin vivid vortex waffle walnut walrus wander whale whistle willow window wizard yacht yarn yodel zebra zephyr zinc zipper anchor badger beacon bramble breeze button candle cobalt cookie copper cotton crayon dagger desert dinner domino falafel feather fiddle finch fjord fluffy gallon geyser gopher harvest helmet hiking icicle jasmine jogger kitchen ladle laurel legend lime lumber marina marsh mitten muffin nebula nutmeg orchid paprika pelican pepper pillow plum pretzel quiver raisin rattle reef saffron sailor sequoia sierra spruce sundial tadpole teapot thistle thunder tinsel toucan trumpet tunnel velcro voyage wagon warbler wigwam yogurt').split(' '))];
+function randInt(n){ const lim = Math.floor(0x100000000 / n) * n, a = new Uint32Array(1); do crypto.getRandomValues(a); while (a[0] >= lim); return a[0] % n; }
+function charSets(o){ let sets = ['upper','lower','num','sym'].filter(k => o[k]).map(k => o.noAmbig ? SETS[k].replace(AMBIG, '') : SETS[k]); return sets.length ? sets : [SETS.lower]; }
+function genPassword(o){
+  const sets = charSets(o), all = sets.join(''), len = Math.max(o.length, sets.length);
+  const ch = sets.map(s => s[randInt(s.length)]);
+  while (ch.length < len) ch.push(all[randInt(all.length)]);
+  for (let i = ch.length - 1; i > 0; i--){ const j = randInt(i + 1); [ch[i], ch[j]] = [ch[j], ch[i]]; }
+  return ch.join('');
+}
+function genPhrase(o){
+  const w = [];
+  for (let i = 0; i < o.words; i++){ let x = WORDS[randInt(WORDS.length)]; if (o.cap) x = x[0].toUpperCase() + x.slice(1); w.push(x); }
+  if (o.pnum){ const i = randInt(w.length); w[i] += randInt(10); }
+  return w.join(o.sep === 'space' ? ' ' : o.sep);
+}
+function gen(){
+  const s = S.vault.settings || (S.vault.settings = {});
+  return s.gen ||= {mode:'pw', length:20, upper:true, lower:true, num:true, sym:true, noAmbig:false, words:6, sep:'-', cap:true, pnum:true};
+}
+function genBits(g){
+  if (g.mode === 'pw') return Math.round(g.length * Math.log2(charSets(g).join('').length));
+  return Math.round(g.words * Math.log2(WORDS.length) + (g.pnum ? Math.log2(10 * g.words) : 0));
+}
+function regen(){ const g = gen(); S.genOut = g.mode === 'pw' ? genPassword(g) : genPhrase(g); }
+
+/* ---------- UI helpers ---------- */
+let toastT;
+function toast(msg, kind){ const t = $('#toast'); t.textContent = msg; t.className = 'show ' + (kind || ''); clearTimeout(toastT); toastT = setTimeout(() => t.className = '', kind === 'err' ? 3200 : 2200); }
+function modal(html){ const m = $('#modal'); m.innerHTML = '<div class="sheet" role="dialog" aria-modal="true">' + html + '</div>'; m.hidden = false; }
+function closeModal(){ const m = $('#modal'); m.hidden = true; m.innerHTML = ''; S.editing = null; if (S.dlg){ const r = S.dlg; S.dlg = null; r(false); } }
+function dialog(html){ return new Promise(r => { if (S.dlg){ const p = S.dlg; S.dlg = null; p(false); } modal(html); S.dlg = r; }); }
+const confirmDlg = (t, b, ok = 'OK', danger) => dialog(`<div class="sheet-b dlg"><h2>${t}</h2><p class="muted">${b}</p><button class="btn ${danger ? 'danger' : 'primary'}" data-act="dlg" data-v="1">${ok}</button><button class="btn ghost" data-act="dlg" data-v="0">Cancel</button></div>`);
+const infoDlg = (t, b) => dialog(`<div class="sheet-b dlg"><h2>${t}</h2>${b}<button class="btn primary" data-act="dlg" data-v="1">OK</button></div>`);
+const askPassword = (t, b) => dialog(`<div class="sheet-b dlg"><h2>${t}</h2><p class="muted">${b}</p><input id="dlgpw" type="password" autocomplete="off" autocapitalize="off" spellcheck="false" placeholder="Backup password"><button class="btn primary" data-act="dlg" data-v="pw">Unlock backup</button><button class="btn ghost" data-act="dlg" data-v="0">Cancel</button></div>`);
+function busy(btn, text){ btn.disabled = true; btn.dataset.label = btn.innerHTML; btn.textContent = text; }
+function unbusy(btn){ btn.disabled = false; if (btn.dataset.label) btn.innerHTML = btn.dataset.label; }
+
+let clipT;
+function legacyCopy(t){ const a = document.createElement('textarea'); a.value = t; a.setAttribute('readonly', ''); a.style.cssText = 'position:fixed;top:0;opacity:0'; document.body.appendChild(a); a.select(); a.setSelectionRange(0, t.length); let ok = false; try { ok = document.execCommand('copy'); } catch {} a.remove(); return ok; }
+async function copy(text, secret){
+  if (!text) return;
+  let ok = true;
+  try { await navigator.clipboard.writeText(text); } catch { ok = legacyCopy(text); }
+  if (!ok) return toast('Copy failed', 'err');
+  toast(secret ? 'Copied · clears in 30s' : 'Copied');
+  if (secret){ clearTimeout(clipT); clipT = setTimeout(clearClipboard, CLIP_MS); }
+}
+function clearClipboard(){ clipT = null; try { navigator.clipboard.writeText('').catch(() => {}); } catch {} }
+
+/* ---------- auto-lock ---------- */
+let idleT;
+function bump(){
+  S.pickerUntil = 0;
+  if (!S.key) return;
+  S.lastAct = Date.now();
+  clearTimeout(idleT);
+  idleT = setTimeout(() => lock('Locked after 2 minutes of inactivity.'), IDLE_MS);
+}
+['pointerdown','keydown','input','touchstart','wheel'].forEach(ev => document.addEventListener(ev, bump, {passive:true, capture:true}));
+document.addEventListener('visibilitychange', () => {
+  if (!S.key) return;
+  if (document.hidden){ if (Date.now() < S.pickerUntil) return; lock(); }
+  else { S.pickerUntil = 0; if (Date.now() - S.lastAct > IDLE_MS) lock('Locked after 2 minutes of inactivity.'); }
+});
+window.addEventListener('pagehide', () => { if (S.key) lock(); });
+
+function lock(msg){
+  if (clipT){ clearTimeout(clipT); clearClipboard(); }
+  clearTimeout(idleT); clearTimeout(setT);
+  S.key = null; S.salt = null; S.vault = null; S.editing = null; S.genOut = ''; S.query = ''; S.filter = null;
+  closeModal();
+  $('#app').innerHTML = '';
+  renderLock(msg);
+}
+
+/* ---------- setup ---------- */
+function renderSetup(){
+  $('#app').innerHTML = `<div class="auth">
+    <div class="logo">${ico.lock}</div>
+    <h1>Create your vault</h1>
+    <p class="muted">Your master password encrypts everything on this device. Nothing is ever sent anywhere.</p>
+    <div class="banner warn"><b>There is no recovery.</b> If you forget your master password, your vault cannot be opened by anyone, including you. Write it down and keep it somewhere safe.</div>
+    <label for="mp1">Master password</label>
+    <div class="pwrow"><input id="mp1" type="password" autocomplete="off" autocapitalize="off" spellcheck="false"><button class="icon" data-act="toggle" data-for="mp1" aria-label="Show password">${ico.eye}</button></div>
+    <div class="meter"><div id="mpbar"></div></div><div id="mplabel" class="small muted" style="margin-top:6px"></div>
+    <label for="mp2">Confirm master password</label>
+    <input id="mp2" type="password" autocomplete="off" autocapitalize="off" spellcheck="false">
+    <label class="check"><input type="checkbox" id="ack"> I understand my master password cannot be recovered or reset.</label>
+    <div id="err" class="err"></div>
+    <button class="btn primary" data-act="create">Create vault</button>
+    <p class="small muted center" style="margin-top:18px">Tip: a passphrase of 5–6 random words is strong and easy to type.</p>
+  </div>`;
+  $('#mp1').addEventListener('input', () => meter('mp1', 'mpbar', 'mplabel'));
+}
+async function createVault(btn){
+  const p1 = $('#mp1').value, p2 = $('#mp2').value, err = m => $('#err').textContent = m;
+  if (p1.length < 10) return err('Use at least 10 characters.');
+  if (p1 !== p2) return err("Passwords don't match.");
+  if (!$('#ack').checked) return err('Please confirm you understand there is no recovery.');
+  if (strength(p1).score < 2){
+    const ok = await confirmDlg('Weak master password', 'This password would be easy to guess. A passphrase of several random words is much stronger. Use it anyway?', 'Use anyway', true);
+    if (!ok) return;
+  }
+  busy(btn, 'Securing vault…');
+  try {
+    const salt = rand(16);
+    S.key = await deriveKey(p1, salt, ITER); S.salt = salt; S.iter = ITER;
+    S.vault = {v:1, entries:[], settings:{}, created:Date.now()};
+    await save();
+    await dbSet('meta', {}); await dbSet('rl', {fails:0, until:0});
+    enterApp();
+  } catch (e){ console.error(e); unbusy(btn); err('Could not create vault: ' + e.message); }
+}
+
+/* ---------- unlock ---------- */
+let rlTimer;
+function renderLock(msg){
+  $('#app').innerHTML = `<div class="auth">
+    <div class="logo">${ico.lock}</div>
+    <h1>Pocket Vault</h1>
+    <p class="muted">${msg ? esc(msg) : 'Enter your master password to unlock.'}</p>
+    <div class="pwrow" style="margin-top:18px"><input id="unlockpw" type="password" autocomplete="off" autocapitalize="off" spellcheck="false" placeholder="Master password" enterkeyhint="go"><button class="icon" data-act="toggle" data-for="unlockpw" aria-label="Show password">${ico.eye}</button></div>
+    <div id="rl" class="err"></div>
+    <button id="unlockBtn" class="btn primary" data-act="unlock">Unlock</button>
+    <button class="linkbtn" data-act="erase">Forgot it? Erase vault and start over</button>
+  </div>`;
+  $('#unlockpw').addEventListener('keydown', e => { if (e.key === 'Enter') unlock($('#unlockBtn')); });
+  showRl();
+}
+async function showRl(note){
+  const rl = (await dbGet('rl')) || {fails:0, until:0};
+  clearInterval(rlTimer);
+  const tick = () => {
+    const el = $('#rl'), btn = $('#unlockBtn'); if (!el || !btn){ clearInterval(rlTimer); return; }
+    const s = Math.ceil((rl.until - Date.now()) / 1000);
+    if (s > 0){ el.textContent = `${note ? note + ' ' : ''}Too many attempts — try again in ${s}s.`; btn.disabled = true; }
+    else { el.textContent = note ? `${note} (${rl.fails} failed attempt${rl.fails > 1 ? 's' : ''})` : ''; if (btn.dataset.busy !== '1') btn.disabled = false; clearInterval(rlTimer); }
+  };
+  tick(); rlTimer = setInterval(tick, 500);
+}
+async function unlock(btn){
+  if (btn.disabled) return;
+  const rl = (await dbGet('rl')) || {fails:0, until:0};
+  if (Date.now() < rl.until) return showRl();
+  const pw = $('#unlockpw').value; if (!pw) return;
+  btn.dataset.busy = '1'; busy(btn, 'Unlocking…');
+  const blob = await dbGet('vault');
+  try {
+    const salt = unb64(blob.salt), key = await deriveKey(pw, salt, blob.iter);
+    const v = await decryptBlob(key, blob);
+    S.key = key; S.salt = salt; S.iter = blob.iter; S.vault = v; S.blob = blob;
+    v.entries ||= []; v.settings ||= {};
+    await dbSet('rl', {fails:0, until:0});
+    enterApp();
+  } catch {
+    rl.fails++;
+    const delay = rl.fails >= 3 ? Math.min(300, 2 ** (rl.fails - 2)) : 0;
+    rl.until = Date.now() + delay * 1000;
+    await dbSet('rl', rl);
+    btn.dataset.busy = ''; unbusy(btn);
+    const inp = $('#unlockpw'); inp.value = ''; inp.focus();
+    showRl('Wrong password.');
+  }
+}
+
+/* ---------- main shell ---------- */
+async function enterApp(){
+  S.meta = (await dbGet('meta')) || {};
+  S.tab = 'vault'; S.query = ''; S.filter = null; S.genOut = '';
+  try { navigator.storage && navigator.storage.persist && navigator.storage.persist().catch(() => {}); } catch {}
+  bump(); renderMain();
+}
+const TITLES = {vault:'Vault', gen:'Generator', settings:'Settings'};
+const tabBtn = (t, l, i) => `<button class="${S.tab === t ? 'on' : ''}" data-act="tab" data-tab="${t}">${i}<span>${l}</span></button>`;
+function renderMain(){
+  if (!S.key) return;
+  $('#app').innerHTML = `<header class="top"><h1>${TITLES[S.tab]}</h1><button class="icon" data-act="lock" aria-label="Lock vault">${ico.lock}</button></header>
+    <main id="content"></main>
+    <nav class="tabs">${tabBtn('vault','Vault',ico.vault)}${tabBtn('gen','Generator',ico.dice)}${tabBtn('settings','Settings',ico.gear)}</nav>`;
+  ({vault:renderVault, gen:renderGen, settings:renderSettings})[S.tab]();
+  window.scrollTo(0, 0);
+}
+function counts(){ const f = analysis(); let weak = 0, reused = 0; S.vault.entries.forEach(e => { const x = f(e); if (x.weak) weak++; if (x.reused) reused++; }); return {f, weak, reused}; }
+
+/* ---------- vault list ---------- */
+function renderVault(){
+  const es = S.vault.entries, {weak, reused} = counts();
+  if ((S.filter === 'weak' && !weak) || (S.filter === 'reused' && !reused)) S.filter = null;
+  const lb = S.meta.lastBackup;
+  const remind = es.length && (!lb || Date.now() - lb > BACKUP_DAYS * 864e5);
+  $('#content').innerHTML = `
+    ${remind ? `<div class="banner warn"><b>${lb ? 'Backup overdue.' : 'No backup yet.'}</b> ${lb ? `Your last backup was ${fmt(lb)}.` : 'If this phone is lost or iOS clears website data, your vault is gone.'}<br><button class="btn dark" data-act="export">${ico.down} Back up now</button></div>` : ''}
+    <input id="q" type="search" placeholder="Search ${es.length} entr${es.length === 1 ? 'y' : 'ies'}" value="${esc(S.query)}" autocomplete="off" autocapitalize="off" spellcheck="false" enterkeyhint="search">
+    ${weak || reused ? `<div class="chips"><button class="chip ${!S.filter ? 'on' : ''}" data-act="filter" data-f="">All</button>${weak ? `<button class="chip amber ${S.filter === 'weak' ? 'on' : ''}" data-act="filter" data-f="weak">Weak · ${weak}</button>` : ''}${reused ? `<button class="chip amber ${S.filter === 'reused' ? 'on' : ''}" data-act="filter" data-f="reused">Reused · ${reused}</button>` : ''}</div>` : ''}
+    <div id="list"></div>
+    <button class="fab" data-act="new" aria-label="Add entry">${ico.plus}</button>`;
+  $('#q').addEventListener('input', e => { S.query = e.target.value; renderList(); });
+  renderList();
+}
+function card(e, x){
+  const initial = ((e.title || hostOf(e.url) || '?').trim()[0] || '?').toUpperCase();
+  return `<div class="card entry" data-act="open" data-id="${e.id}">
+    <div class="av">${esc(initial)}</div>
+    <div class="meta"><div class="t">${esc(e.title || '(untitled)')}</div><div class="s">${esc(e.username || hostOf(e.url) || '\u00a0')}</div>
+      ${x.weak || x.reused ? `<div>${x.weak ? '<span class="tag amber">Weak</span>' : ''}${x.reused ? '<span class="tag amber">Reused</span>' : ''}</div>` : ''}</div>
+    <div class="acts">${e.username ? `<button class="icon" data-act="copyU" data-id="${e.id}" aria-label="Copy username">${ico.user}</button>` : ''}${e.password ? `<button class="icon accent" data-act="copyP" data-id="${e.id}" aria-label="Copy password">${ico.key}</button>` : ''}</div>
+  </div>`;
+}
+function renderList(){
+  const el = $('#list'); if (!el) return;
+  const q = S.query.trim().toLowerCase(), f = analysis();
+  let list = S.vault.entries.filter(e => !q || [e.title, e.username, e.url, e.category, e.notes].some(x => (x || '').toLowerCase().includes(q)));
+  if (S.filter) list = list.filter(e => f(e)[S.filter]);
+  const cmp = (a, b) => (a || '').localeCompare(b || '', undefined, {sensitivity:'base'});
+  list.sort((a, b) => cmp(a.title, b.title));
+  const fav = list.filter(e => e.favorite), groups = {};
+  list.filter(e => !e.favorite).forEach(e => { const k = e.category || 'Uncategorized'; (groups[k] ||= []).push(e); });
+  let h = '';
+  if (!S.vault.entries.length) h = `<div class="empty">${ico.vault}<br><b>Your vault is empty.</b><br>Tap + to add your first login, or import from another manager in Settings.</div>`;
+  else if (!list.length) h = '<div class="empty">No matches.</div>';
+  const sec = (title, arr) => `<div class="sec">${esc(title)}</div>` + arr.map(e => card(e, f(e))).join('');
+  if (fav.length) h += sec('★ Favorites', fav);
+  Object.keys(groups).sort((a, b) => a === 'Uncategorized' ? 1 : b === 'Uncategorized' ? -1 : cmp(a, b)).forEach(k => h += sec(k, groups[k]));
+  el.innerHTML = h;
+}
+
+/* ---------- entry editor ---------- */
+function openEditor(id, preset){
+  const e = id ? S.vault.entries.find(x => x.id === id) : {id:null, title:'', username:'', password:preset || '', url:'', notes:'', category:'', favorite:false};
+  if (!e) return;
+  S.editing = {id:e.id};
+  const cats = [...new Set(S.vault.entries.map(x => x.category).filter(Boolean))].sort();
+  const open = safeUrl(e.url);
+  modal(`<div class="sheet-h"><button class="link" data-act="close">Cancel</button><h2>${id ? 'Edit entry' : 'New entry'}</h2><button class="link accent" data-act="saveEntry">Save</button></div>
+  <div class="sheet-b">
+    <label for="f_title">Title</label><input id="f_title" value="${esc(e.title)}" placeholder="e.g. Chase Bank" autocomplete="off">
+    <label for="f_user">Username / email</label>
+    <div class="pwrow"><input id="f_user" value="${esc(e.username)}" autocapitalize="off" autocomplete="off" spellcheck="false"><button class="icon" data-act="copyField" data-for="f_user" aria-label="Copy username">${ico.copy}</button></div>
+    <label for="f_pw">Password</label>
+    <div class="pwrow"><input id="f_pw" class="mono" type="${preset ? 'text' : 'password'}" value="${esc(e.password)}" autocapitalize="off" autocomplete="off" spellcheck="false"><button class="icon ${preset ? 'on' : ''}" data-act="toggle" data-for="f_pw" aria-label="Show password">${ico.eye}</button><button class="icon" data-act="genInto" aria-label="Generate password">${ico.dice}</button><button class="icon" data-act="copyField" data-for="f_pw" data-secret="1" aria-label="Copy password">${ico.copy}</button></div>
+    <div class="meter"><div id="f_bar"></div></div><div id="f_lbl" class="small muted" style="margin-top:6px"></div>
+    <label for="f_url">Website</label>
+    <div class="pwrow"><input id="f_url" type="url" inputmode="url" value="${esc(e.url)}" placeholder="example.com" autocapitalize="off" autocomplete="off" spellcheck="false">${open ? `<a class="icon" href="${esc(open)}" target="_blank" rel="noopener noreferrer" aria-label="Open website">${ico.link}</a>` : ''}</div>
+    <label for="f_cat">Category</label><input id="f_cat" list="catlist" value="${esc(e.category)}" placeholder="e.g. Banking, Work, Shopping" autocomplete="off"><datalist id="catlist">${cats.map(c => `<option value="${esc(c)}">`).join('')}</datalist>
+    <label for="f_notes">Notes</label><textarea id="f_notes" rows="4">${esc(e.notes)}</textarea>
+    <label class="check"><input type="checkbox" id="f_fav" ${e.favorite ? 'checked' : ''}> Favorite</label>
+    ${id ? `<p class="small muted" style="margin-top:14px">Created ${fmt(e.created)} · Updated ${fmt(e.updated)}</p><button class="btn danger" data-act="delEntry">Delete entry</button>` : ''}
+  </div>`);
+  const pw = $('#f_pw'); pw.addEventListener('input', () => meter('f_pw', 'f_bar', 'f_lbl')); meter('f_pw', 'f_bar', 'f_lbl');
+  if (!id) setTimeout(() => $('#f_title') && $('#f_title').focus(), 50);
+}
+async function saveEntry(){
+  if (!S.editing) return;
+  const v = id => $('#' + id).value;
+  const d = {title:v('f_title').trim(), username:v('f_user').trim(), password:v('f_pw'), url:v('f_url').trim(), category:v('f_cat').trim(), notes:v('f_notes'), favorite:$('#f_fav').checked};
+  if (!d.title && !d.url && !d.username) return toast('Add a title first', 'err');
+  if (!d.title) d.title = hostOf(d.url) || d.username;
+  const now = Date.now(), id = S.editing.id;
+  if (id){ const e = S.vault.entries.find(x => x.id === id); if (e) Object.assign(e, d, {updated:now}); }
+  else S.vault.entries.push({id:uid(), ...d, created:now, updated:now});
+  await save(); closeModal(); toast('Saved'); renderMain();
+}
+async function delEntry(){
+  const id = S.editing && S.editing.id; if (!id) return;
+  const e = S.vault.entries.find(x => x.id === id);
+  const ok = await confirmDlg('Delete entry?', `“${esc(e ? e.title : '')}” will be permanently removed.`, 'Delete', true);
+  if (!ok) return openEditor(id);
+  S.vault.entries = S.vault.entries.filter(x => x.id !== id);
+  await save(); closeModal(); toast('Deleted'); renderMain();
+}
+
+/* ---------- generator tab ---------- */
+function updateGenOut(){
+  const g = gen(), b = genBits(g), lab = b < 40 ? 'Weak' : b < 60 ? 'Fair' : b < 80 ? 'Strong' : 'Very strong';
+  $('#gout').textContent = S.genOut; $('#gstr').textContent = `≈ ${b} bits of entropy · ${lab}`;
+}
+const sw = (k, label, g) => `<label class="opt" style="margin:0;color:var(--text);font-size:16px">${label}<input type="checkbox" class="sw" data-k="${k}" ${g[k] ? 'checked' : ''}></label>`;
+function renderGen(){
+  const g = gen(); if (!S.genOut) regen();
+  $('#content').innerHTML = `
+    <div class="seg"><button data-act="gmode" data-m="pw" class="${g.mode === 'pw' ? 'on' : ''}">Password</button><button data-act="gmode" data-m="phrase" class="${g.mode === 'phrase' ? 'on' : ''}">Passphrase</button></div>
+    <div class="card out"><div id="gout" class="mono big"></div><div id="gstr" class="small muted"></div>
+      <div class="row"><button class="btn" data-act="regen">${ico.dice} New</button><button class="btn primary" data-act="gcopy">${ico.copy} Copy</button></div>
+      <button class="btn ghost" data-act="gnew">${ico.plus} Save as new entry</button></div>
+    <div class="card opts">${g.mode === 'pw' ? `
+      <div class="opt"><span>Length</span><output id="v_length">${g.length}</output></div>
+      <input type="range" min="8" max="64" value="${g.length}" data-k="length" aria-label="Length">
+      ${sw('upper','Uppercase (A–Z)',g)}${sw('lower','Lowercase (a–z)',g)}${sw('num','Numbers (0–9)',g)}${sw('sym','Symbols (!@#…)',g)}${sw('noAmbig','Exclude look-alikes (I l 1 O 0 o)',g)}` : `
+      <div class="opt"><span>Words</span><output id="v_words">${g.words}</output></div>
+      <input type="range" min="3" max="10" value="${g.words}" data-k="words" aria-label="Words">
+      <div class="opt"><span>Separator</span><select data-k="sep">${[['-','Hyphen  -'],['.','Period  .'],['_','Underscore  _'],['space','Space']].map(([v, l]) => `<option value="${v}" ${g.sep === v ? 'selected' : ''}>${l}</option>`).join('')}</select></div>
+      ${sw('cap','Capitalize words',g)}${sw('pnum','Add a number',g)}`}
+    </div>`;
+  updateGenOut();
+  $('#content').querySelectorAll('[data-k]').forEach(i => i.addEventListener(i.type === 'range' ? 'input' : 'change', () => {
+    const k = i.dataset.k;
+    g[k] = i.type === 'checkbox' ? i.checked : i.type === 'range' ? +i.value : i.value;
+    if (i.type === 'range') $('#v_' + k).textContent = i.value;
+    if (g.mode === 'pw' && !['upper','lower','num','sym'].some(x => g[x])){ g.lower = true; $('[data-k=lower]').checked = true; }
+    regen(); updateGenOut(); saveSettings();
+  }));
+}
+
+/* ---------- settings ---------- */
+function renderSettings(){
+  const {weak, reused} = counts(), lb = S.meta.lastBackup;
+  $('#content').innerHTML = `
+    <div class="card"><h3>Security overview</h3><div class="stats">
+      <div class="stat" data-act="goFilter" data-f=""><b>${S.vault.entries.length}</b><span>Entries</span></div>
+      <div class="stat ${weak ? 'warn' : ''}" data-act="goFilter" data-f="${weak ? 'weak' : ''}"><b>${weak}</b><span>Weak</span></div>
+      <div class="stat ${reused ? 'warn' : ''}" data-act="goFilter" data-f="${reused ? 'reused' : ''}"><b>${reused}</b><span>Reused</span></div></div></div>
+    <div class="card"><h3>Backup</h3>
+      <p class="small muted">Last backup: <b style="color:var(--text)">${lb ? fmt(lb) : 'Never'}</b>. Backups stay encrypted with the master password that was active when you made them. Save them to iCloud Drive or Files.</p>
+      <button class="btn primary" data-act="export">${ico.down} Export encrypted backup</button>
+      <button class="btn" data-act="import">${ico.up} Restore / merge a backup</button></div>
+    <div class="card"><h3>Import from another manager</h3>
+      <p class="small muted">CSV exports from Apple Passwords, Bitwarden, 1Password, LastPass, Chrome and most others.</p>
+      <button class="btn" data-act="csv">Import CSV</button></div>
+    <div class="card"><h3>Master password</h3><button class="btn" data-act="changePw">Change master password</button></div>
+    <div class="card"><h3>Auto-lock</h3>
+      <p class="small muted">Locks after 2 minutes without activity and whenever you leave the app. Copied passwords are cleared from the clipboard after 30 seconds when iOS allows it.</p>
+      <button class="btn" data-act="lock">${ico.lock} Lock now</button></div>
+    <div class="card"><h3>Danger zone</h3><button class="btn danger" data-act="erase">Erase vault on this device</button></div>
+    <p class="small muted center">Pocket Vault ${VERSION} · Offline only<br>AES-256-GCM · PBKDF2-SHA256 × ${ITER.toLocaleString()}</p>`;
+}
+
+/* ---------- backup ---------- */
+async function exportBackup(){
+  if (!S.blob) return toast('Nothing to back up yet', 'err');
+  const name = `pocket-vault-backup-${new Date().toISOString().slice(0, 10)}.json`;
+  const data = JSON.stringify({format:'pocket-vault-backup', exported:new Date().toISOString(), ...S.blob});
+  const file = new File([data], name, {type:'application/json'});
+  S.pickerUntil = Date.now() + 120000;
+  try {
+    if (navigator.canShare && navigator.canShare({files:[file]})) await navigator.share({files:[file], title:name});
+    else { const a = document.createElement('a'); a.href = URL.createObjectURL(file); a.download = name; document.body.appendChild(a); a.click(); setTimeout(() => { URL.revokeObjectURL(a.href); a.remove(); }, 5000); }
+  } catch (e){ S.pickerUntil = 0; if (e && e.name === 'AbortError') return toast('Backup cancelled'); return toast('Export failed', 'err'); }
+  S.pickerUntil = 0;
+  if (!S.key) return;
+  S.meta.lastBackup = Date.now(); await dbSet('meta', S.meta);
+  toast('Backup exported'); renderMain();
+}
+function cleanEntry(e){
+  const now = Date.now();
+  return {id:/^[\w-]{1,64}$/.test(e.id) ? e.id : uid(), title:str(e.title), username:str(e.username), password:str(e.password), url:str(e.url), notes:str(e.notes), category:str(e.category), favorite:!!e.favorite, created:+e.created || now, updated:+e.updated || now};
+}
+$('#fileJson').addEventListener('change', async ev => {
+  const f = ev.target.files[0]; ev.target.value = ''; S.pickerUntil = 0;
+  if (!f || !S.key) return;
+  let b;
+  try { b = JSON.parse(await f.text()); if (!b || !b.salt || !b.iv || !b.ct) throw 0; } catch { return toast('Not a Pocket Vault backup file', 'err'); }
+  const pw = await askPassword('Unlock backup', 'Enter the master password that was active when this backup was made.');
+  if (!pw || !S.key) return;
+  toast('Decrypting…');
+  let v;
+  try { const iter = Math.min(5e6, Math.max(1e5, +b.iter || ITER)); const k = await deriveKey(pw, unb64(b.salt), iter); v = await decryptBlob(k, b); }
+  catch { return toast('Wrong password for this backup', 'err'); }
+  if (!S.key) return;
+  let added = 0, updated = 0;
+  const byId = new Map(S.vault.entries.map(e => [e.id, e]));
+  for (const raw of (v.entries || [])){
+    const e = cleanEntry(raw), cur = byId.get(e.id);
+    if (!cur){ S.vault.entries.push(e); byId.set(e.id, e); added++; }
+    else if (e.updated > (cur.updated || 0)){ Object.assign(cur, e); updated++; }
+  }
+  await save();
+  toast(`Backup merged: ${added} new, ${updated} updated`); renderMain();
+});
+
+/* ---------- CSV import ---------- */
+function parseCSV(t){
+  const rows = []; let row = [], f = '', q = false;
+  for (let i = 0; i < t.length; i++){
+    const c = t[i];
+    if (q){ if (c === '"'){ if (t[i + 1] === '"'){ f += '"'; i++; } else q = false; } else f += c; }
+    else if (c === '"') q = true;
+    else if (c === ','){ row.push(f); f = ''; }
+    else if (c === '\n' || c === '\r'){ if (c === '\r' && t[i + 1] === '\n') i++; row.push(f); rows.push(row); row = []; f = ''; }
+    else f += c;
+  }
+  if (f || row.length){ row.push(f); rows.push(row); }
+  return rows.filter(r => r.some(x => x.trim()));
+}
+function importCSV(text){
+  const rows = parseCSV(text.replace(/^\uFEFF/, ''));
+  if (rows.length < 2) throw new Error('No rows found in that file.');
+  const h = rows[0].map(x => x.trim().toLowerCase());
+  const col = names => { for (const n of names){ const i = h.indexOf(n); if (i >= 0) return i; } return -1; };
+  const c = {
+    title:col(['title','name','account','site','item','item name']),
+    url:col(['url','login_uri','website','web site','uri','urls','login url']),
+    user:col(['username','login_username','login','user','email','user name','login name','email address']),
+    pw:col(['password','login_password','pass']),
+    notes:col(['notes','note','extra','comments','comment']),
+    cat:col(['folder','category','grouping','group','tags','tag']),
+    fav:col(['favorite','fav','favourite'])
+  };
+  if (c.pw < 0) throw new Error('Could not find a "password" column.');
+  const now = Date.now(), out = [];
+  for (const r of rows.slice(1)){
+    const g = i => i >= 0 ? (r[i] || '').trim() : '';
+    const e = {id:uid(), title:g(c.title) || hostOf(g(c.url)) || 'Imported', username:g(c.user), password:c.pw >= 0 ? (r[c.pw] || '') : '', url:g(c.url), notes:g(c.notes), category:g(c.cat), favorite:/^(1|true|yes|x)$/i.test(g(c.fav)), created:now, updated:now};
+    if (e.password || e.username || e.url) out.push(e);
+  }
+  return out;
+}
+async function csvStart(){
+  const ok = await confirmDlg('Import from CSV', 'Exported CSV files contain your passwords in <b>plain text</b>. After importing, delete the CSV from Files <b>and</b> from Recently Deleted.', 'Choose CSV file');
+  if (!ok) return;
+  S.pickerUntil = Date.now() + 120000;
+  $('#fileCsv').click();
+}
+$('#fileCsv').addEventListener('change', async ev => {
+  const f = ev.target.files[0]; ev.target.value = ''; S.pickerUntil = 0;
+  if (!f || !S.key) return;
+  let list;
+  try { list = importCSV(await f.text()); } catch (e){ return toast(e.message || 'Could not read CSV', 'err'); }
+  const key = e => [e.title, e.username, e.password].join('\u0000').toLowerCase();
+  const have = new Set(S.vault.entries.map(key));
+  let added = 0, skipped = 0;
+  for (const e of list){ if (have.has(key(e))){ skipped++; continue; } S.vault.entries.push(e); have.add(key(e)); added++; }
+  await save(); renderMain();
+  await infoDlg(`Imported ${added} entr${added === 1 ? 'y' : 'ies'}`, `${skipped ? `<p class="muted">${skipped} duplicate${skipped > 1 ? 's' : ''} skipped.</p>` : ''}<div class="banner warn"><b>Delete the CSV file now.</b> It contains every password in plain text. Remove it from Files, then empty Recently Deleted.</div>`);
+});
+
+/* ---------- change master password ---------- */
+function changePwDlg(){
+  modal(`<div class="sheet-h"><button class="link" data-act="close">Cancel</button><h2>Master password</h2><span style="width:70px"></span></div>
+  <div class="sheet-b">
+    <label for="cp0">Current password</label><input id="cp0" type="password" autocomplete="off" autocapitalize="off" spellcheck="false">
+    <label for="cp1">New password</label>
+    <div class="pwrow"><input id="cp1" type="password" autocomplete="off" autocapitalize="off" spellcheck="false"><button class="icon" data-act="toggle" data-for="cp1" aria-label="Show password">${ico.eye}</button></div>
+    <div class="meter"><div id="cpbar"></div></div><div id="cplbl" class="small muted" style="margin-top:6px"></div>
+    <label for="cp2">Confirm new password</label><input id="cp2" type="password" autocomplete="off" autocapitalize="off" spellcheck="false">
+    <div id="cperr" class="err"></div>
+    <button class="btn primary" data-act="doChangePw">Change password</button>
+    <p class="small muted">Your vault is re-encrypted with a new key. Older backups still open only with the old password.</p>
+  </div>`);
+  $('#cp1').addEventListener('input', () => meter('cp1', 'cpbar', 'cplbl'));
+}
+async function doChangePw(btn){
+  const cur = $('#cp0').value, n1 = $('#cp1').value, n2 = $('#cp2').value, err = m => $('#cperr').textContent = m;
+  if (n1.length < 10) return err('New password must be at least 10 characters.');
+  if (n1 !== n2) return err("New passwords don't match.");
+  if (n1 === cur) return err('New password must be different.');
+  busy(btn, 'Verifying…');
+  try { const k = await deriveKey(cur, S.salt, S.iter); await decryptBlob(k, S.blob); }
+  catch { unbusy(btn); return err('Current password is incorrect.'); }
+  if (!S.key) return;
+  busy(btn, 'Re-encrypting…');
+  const salt = rand(16), key = await deriveKey(n1, salt, ITER);
+  if (!S.vault) return;
+  S.key = key; S.salt = salt; S.iter = ITER;
+  await save();
+  S.meta.lastBackup = 0; await dbSet('meta', S.meta);
+  closeModal(); renderMain();
+  infoDlg('Master password changed', '<p class="muted">Export a fresh backup now. Your older backups still use the old password.</p>');
+}
+
+/* ---------- erase ---------- */
+async function eraseDlg(){
+  const v = await dialog(`<div class="sheet-b dlg"><h2>Erase vault?</h2>
+    <div class="banner warn">This permanently deletes every entry on this device. Unless you have a backup and remember its password, this cannot be undone.</div>
+    <label for="dlgtext">Type ERASE to confirm</label><input id="dlgtext" autocapitalize="characters" autocomplete="off" spellcheck="false">
+    <button class="btn danger" data-act="dlg" data-v="text">Erase everything</button><button class="btn ghost" data-act="dlg" data-v="0">Cancel</button></div>`);
+  if (v === false) return;
+  if (String(v).trim().toUpperCase() !== 'ERASE') return toast('Not erased — confirmation text did not match', 'err');
+  await saveQ;
+  await dbDel('vault'); await dbDel('meta'); await dbDel('rl');
+  clearTimeout(idleT);
+  S.key = null; S.salt = null; S.vault = null; S.blob = null; S.meta = {};
+  renderSetup(); toast('Vault erased');
+}
+
+/* ---------- event delegation ---------- */
+document.addEventListener('click', async ev => {
+  const el = ev.target.closest('[data-act]'); if (!el) return;
+  const a = el.dataset.act, id = el.dataset.id;
+  const E = () => S.vault && S.vault.entries.find(x => x.id === id);
+  switch (a){
+    case 'create': return createVault(el);
+    case 'unlock': return unlock(el);
+    case 'toggle': { const i = document.getElementById(el.dataset.for); i.type = i.type === 'password' ? 'text' : 'password'; el.classList.toggle('on', i.type === 'text'); return; }
+    case 'lock': return lock();
+    case 'tab': S.tab = el.dataset.tab; return renderMain();
+    case 'new': return openEditor(null);
+    case 'open': return openEditor(id);
+    case 'copyU': { const e = E(); return e && copy(e.username, false); }
+    case 'copyP': { const e = E(); return e && copy(e.password, true); }
+    case 'copyField': { const v = document.getElementById(el.dataset.for).value; return copy(v, !!el.dataset.secret); }
+    case 'genInto': { const g = gen(), i = $('#f_pw'); i.value = genPassword(g.mode === 'pw' ? g : {length:20, upper:true, lower:true, num:true, sym:true}); i.type = 'text'; const t = document.querySelector('[data-for=f_pw][data-act=toggle]'); t && t.classList.add('on'); meter('f_pw', 'f_bar', 'f_lbl'); return; }
+    case 'close': return closeModal();
+    case 'saveEntry': return saveEntry();
+    case 'delEntry': return delEntry();
+    case 'filter': S.filter = el.dataset.f || null; return renderVault();
+    case 'goFilter': S.tab = 'vault'; S.filter = el.dataset.f || null; S.query = ''; return renderMain();
+    case 'gmode': gen().mode = el.dataset.m; regen(); saveSettings(); return renderGen();
+    case 'regen': regen(); return updateGenOut();
+    case 'gcopy': return copy(S.genOut, true);
+    case 'gnew': return openEditor(null, S.genOut);
+    case 'export': return exportBackup();
+    case 'import': S.pickerUntil = Date.now() + 120000; return $('#fileJson').click();
+    case 'csv': return csvStart();
+    case 'changePw': return changePwDlg();
+    case 'doChangePw': return doChangePw(el);
+    case 'erase': return eraseDlg();
+    case 'dlg': {
+      const r = S.dlg; S.dlg = null;
+      let v = el.dataset.v === '1';
+      if (el.dataset.v === 'pw') v = $('#dlgpw').value || false;
+      if (el.dataset.v === 'text') v = $('#dlgtext').value;
+      closeModal(); r && r(v); return;
+    }
+  }
+});
+document.addEventListener('keydown', e => {
+  if (e.key !== 'Enter') return;
+  if (e.target.id === 'dlgpw') document.querySelector('[data-v=pw]').click();
+  if (e.target.id === 'mp2') createVault(document.querySelector('[data-act=create]'));
+});
+
+/* ---------- PWA: manifest, icons, service worker ---------- */
+function makeIcon(n){
+  const c = document.createElement('canvas'); c.width = c.height = n;
+  const x = c.getContext('2d'), s = n / 100;
+  x.fillStyle = '#07080A'; x.fillRect(0, 0, n, n);
+  x.strokeStyle = '#3CC79A'; x.lineWidth = 7 * s; x.lineCap = 'round';
+  x.beginPath(); x.arc(50 * s, 40 * s, 14 * s, Math.PI, 0); x.lineTo(64 * s, 50 * s); x.moveTo(36 * s, 40 * s); x.lineTo(36 * s, 50 * s); x.stroke();
+  x.fillStyle = '#3CC79A'; x.beginPath();
+  const rx = 25 * s, ry = 48 * s, w = 50 * s, h = 34 * s, r = 7 * s;
+  x.moveTo(rx + r, ry); x.arcTo(rx + w, ry, rx + w, ry + h, r); x.arcTo(rx + w, ry + h, rx, ry + h, r); x.arcTo(rx, ry + h, rx, ry, r); x.arcTo(rx, ry, rx + w, ry, r); x.fill();
+  x.fillStyle = '#07080A'; x.beginPath(); x.arc(50 * s, 62 * s, 5 * s, 0, Math.PI * 2); x.fill(); x.fillRect(47.5 * s, 62 * s, 5 * s, 10 * s);
+  return c.toDataURL('image/png');
+}
+function addLink(rel, href, extra){ const l = document.createElement('link'); l.rel = rel; l.href = href; if (extra) Object.assign(l, extra); document.head.appendChild(l); }
+function setupPWA(){
+  const base = location.href.split('#')[0].split('?')[0], scope = base.replace(/[^/]*$/, '');
+  const icon = makeIcon(512);
+  const m = {name:'Pocket Vault', short_name:'Vault', start_url:base, scope, display:'standalone', background_color:'#07080A', theme_color:'#07080A', icons:[{src:icon, sizes:'512x512', type:'image/png', purpose:'any'}]};
+  addLink('manifest', 'data:application/manifest+json,' + encodeURIComponent(JSON.stringify(m)));
+  addLink('apple-touch-icon', makeIcon(180));
+  addLink('icon', makeIcon(64));
+  if ('serviceWorker' in navigator && location.protocol === 'https:') navigator.serviceWorker.register('sw.js').catch(() => {});
+}
+
+/* ---------- boot ---------- */
+(async function init(){
+  try { setupPWA(); } catch {}
+  if (!window.crypto || !crypto.subtle || !window.indexedDB){
+    $('#app').innerHTML = '<div class="auth"><h1>Not supported</h1><p class="muted">This browser lacks secure crypto or storage. Open the app over HTTPS in Safari.</p></div>';
+    return;
+  }
+  try { (await dbGet('vault')) ? renderLock() : renderSetup(); }
+  catch (e){ $('#app').innerHTML = `<div class="auth"><h1>Storage unavailable</h1><p class="muted">${esc(e.message)}</p></div>`; }
+})();
+</script>
+</body>
+</html>
