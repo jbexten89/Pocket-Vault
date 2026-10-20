@@ -1,7 +1,7 @@
 // Pocket Vault service worker — caches the app shell so it opens offline.
 // Network-first: you always get the latest version you pushed to GitHub when online.
 // It never sees vault data (that lives only in IndexedDB, encrypted).
-const CACHE = 'pocket-vault-v3';
+const CACHE = 'pocket-vault-v4';
 const SHELL = ['./', './index.html'];
 
 self.addEventListener('install', e => {
