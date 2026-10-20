@@ -2,48 +2,48 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
 <meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'unsafe-inline'; style-src 'unsafe-inline'; img-src data: blob:; manifest-src data:; worker-src 'self'; connect-src 'none'; form-action 'none'; base-uri 'none'">
 <meta name="referrer" content="no-referrer">
-<meta name="color-scheme" content="dark">
-<meta name="theme-color" content="#07080A">
+<meta name="color-scheme" content="light">
+<meta name="theme-color" content="#F5F6F8">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
 <meta name="apple-mobile-web-app-title" content="Vault">
 <meta name="format-detection" content="telephone=no">
 <title>Pocket Vault</title>
 <style>
-:root{--bg:#07080A;--panel:#111317;--panel2:#181B20;--border:#24272E;--text:#E7E9EC;--muted:#8B919A;--accent:#3CC79A;--amber:#E3A04F;--ink:#1A1205;--danger:#E5646E;--r:14px;color-scheme:dark}
-*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+:root{--bg:#F5F6F8;--panel:#FFFFFF;--panel2:#EEF0F3;--border:#DFE2E7;--text:#16191D;--muted:#6B717A;--accent:#0E9F7A;--on-accent:#FFFFFF;--amber:#E3A04F;--ink:#1A1205;--danger:#D14552;--r:14px;color-scheme:light}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent;touch-action:manipulation}
 html,body{margin:0;background:var(--bg);color:var(--text);font-family:"Nunito Sans","Avenir Next",Avenir,-apple-system,BlinkMacSystemFont,system-ui,sans-serif}
 body{min-height:100vh;min-height:100dvh;-webkit-text-size-adjust:100%;overscroll-behavior-y:none}
 button{cursor:pointer;-webkit-user-select:none;user-select:none}
 input,textarea,select,button{font:inherit;font-size:16px;color:inherit}
-input,textarea,select{width:100%;background:var(--panel2);border:1px solid var(--border);border-radius:10px;padding:12px 14px;outline:none;-webkit-appearance:none;appearance:none}
+input,textarea,select{width:100%;background:var(--panel);border:1px solid var(--border);border-radius:10px;padding:12px 14px;outline:none;-webkit-appearance:none;appearance:none}
 textarea{resize:vertical;line-height:1.4}
 input:focus,textarea:focus,select:focus{border-color:var(--accent)}
-input::placeholder,textarea::placeholder{color:#5D636C}
+input::placeholder,textarea::placeholder{color:#9AA0A8}
 label{display:block;font-size:13px;color:var(--muted);margin:14px 0 6px;font-weight:700}
 svg{width:22px;height:22px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;flex:none}
 svg .f{fill:currentColor;stroke:none}
-.top{position:sticky;top:0;z-index:5;display:flex;align-items:center;justify-content:space-between;padding:calc(env(safe-area-inset-top) + 8px) 8px 8px 16px;background:rgba(7,8,10,.92);-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px);border-bottom:1px solid var(--border)}
+.top{position:sticky;top:0;z-index:5;display:flex;align-items:center;justify-content:space-between;padding:calc(env(safe-area-inset-top) + 8px) 8px 8px 16px;background:rgba(245,246,248,.92);-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px);border-bottom:1px solid var(--border)}
 .top h1{font-size:24px;margin:0;font-weight:800;letter-spacing:-.01em}
 main{padding:14px 16px calc(100px + env(safe-area-inset-bottom));max-width:640px;margin:0 auto}
-.tabs{position:fixed;bottom:0;left:0;right:0;display:flex;background:rgba(17,19,23,.96);-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px);border-top:1px solid var(--border);padding-bottom:env(safe-area-inset-bottom);z-index:6}
+.tabs{position:fixed;bottom:0;left:0;right:0;display:flex;background:rgba(255,255,255,.96);-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px);border-top:1px solid var(--border);padding-bottom:env(safe-area-inset-bottom);z-index:6}
 .tabs button{flex:1;background:none;border:0;padding:9px 0 7px;color:var(--muted);display:flex;flex-direction:column;align-items:center;gap:3px;font-size:11px;font-weight:800}
 .tabs button.on{color:var(--accent)}
 .btn{display:flex;align-items:center;justify-content:center;gap:8px;min-height:50px;padding:0 18px;border-radius:12px;border:1px solid var(--border);background:var(--panel2);font-weight:800;width:100%;margin-top:10px}
 .btn svg{width:20px;height:20px}
-.btn.primary{background:var(--accent);border-color:var(--accent);color:#06140F}
-.btn.danger{color:var(--danger);border-color:rgba(229,100,110,.45);background:transparent}
+.btn.primary{background:var(--accent);border-color:var(--accent);color:var(--on-accent)}
+.btn.danger{color:var(--danger);border-color:rgba(209,69,82,.4);background:transparent}
 .btn.ghost{background:transparent}
 .btn.dark{background:var(--ink);border-color:var(--ink);color:var(--amber);min-height:42px;width:auto;display:inline-flex;margin-top:10px}
 .btn:disabled{opacity:.55}
 .icon{width:44px;height:44px;flex:none;display:inline-flex;align-items:center;justify-content:center;background:transparent;border:0;border-radius:10px;color:var(--muted);padding:0}
 .icon:active{background:var(--panel2)}
 .icon.accent,.icon.on{color:var(--accent)}
-.card{background:var(--panel);border:1px solid var(--border);border-radius:var(--r);padding:16px;margin-bottom:12px}
+.card{background:var(--panel);border:1px solid var(--border);border-radius:var(--r);padding:16px;margin-bottom:12px;box-shadow:0 1px 2px rgba(16,24,40,.04)}
 .card h3{margin:0 0 6px;font-size:17px;font-weight:800}
 .card p{margin:0 0 4px;line-height:1.45}
 .entry{display:flex;align-items:center;gap:12px;padding:10px 4px 10px 12px;margin-bottom:8px}
@@ -61,9 +61,9 @@ main{padding:14px 16px calc(100px + env(safe-area-inset-bottom));max-width:640px
 .chips{display:flex;gap:8px;margin-top:10px;overflow-x:auto;scrollbar-width:none}
 .chip{border:1px solid var(--border);background:var(--panel);border-radius:999px;padding:8px 14px;font-size:14px;font-weight:800;color:var(--muted);white-space:nowrap}
 .chip.on{border-color:var(--accent);color:var(--accent)}
-.chip.amber{color:var(--amber)}
+.chip.amber{color:#A8651A;border-color:#EBC594}
 .chip.amber.on{background:var(--amber);border-color:var(--amber);color:var(--ink)}
-.fab{position:fixed;right:18px;bottom:calc(78px + env(safe-area-inset-bottom));width:60px;height:60px;border-radius:18px;background:var(--accent);color:#06140F;border:0;display:flex;align-items:center;justify-content:center;box-shadow:0 10px 28px rgba(60,199,154,.28);z-index:5}
+.fab{position:fixed;right:18px;bottom:calc(78px + env(safe-area-inset-bottom));width:60px;height:60px;border-radius:18px;background:var(--accent);color:var(--on-accent);border:0;display:flex;align-items:center;justify-content:center;box-shadow:0 10px 24px rgba(14,159,122,.3);z-index:5}
 .fab svg{width:28px;height:28px;stroke-width:2.5}
 .pwrow{display:flex;gap:2px;align-items:center}
 .pwrow input{flex:1;min-width:0}
@@ -80,7 +80,7 @@ main{padding:14px 16px calc(100px + env(safe-area-inset-bottom));max-width:640px
 .check{display:flex;gap:12px;align-items:flex-start;color:var(--text);font-size:15px;font-weight:600;margin:16px 0 4px;line-height:1.35}
 .check input{width:24px;height:24px;flex:none;margin:0;padding:0;-webkit-appearance:checkbox;appearance:auto;accent-color:var(--accent)}
 .linkbtn{background:none;border:0;color:var(--muted);font-weight:700;font-size:14px;margin-top:22px;width:100%;padding:10px;text-decoration:underline}
-#modal{position:fixed;inset:0;z-index:20;background:rgba(0,0,0,.65);display:flex;align-items:flex-end;justify-content:center}
+#modal{position:fixed;inset:0;z-index:20;background:rgba(16,20,26,.45);display:flex;align-items:flex-end;justify-content:center}
 #modal[hidden]{display:none}
 .sheet{width:100%;max-width:640px;max-height:94vh;max-height:94dvh;overflow:auto;-webkit-overflow-scrolling:touch;background:var(--bg);border:1px solid var(--border);border-bottom:0;border-radius:20px 20px 0 0;padding-bottom:calc(20px + env(safe-area-inset-bottom))}
 .sheet-h{position:sticky;top:0;display:flex;align-items:center;justify-content:space-between;padding:8px 4px;background:var(--bg);border-bottom:1px solid var(--border);z-index:1}
@@ -91,30 +91,30 @@ main{padding:14px 16px calc(100px + env(safe-area-inset-bottom));max-width:640px
 .dlg p{line-height:1.45}
 .link{background:none;border:0;color:var(--muted);font-weight:800;padding:10px 14px;min-height:44px}
 .link.accent{color:var(--accent)}
-#toast{position:fixed;left:50%;bottom:calc(152px + env(safe-area-inset-bottom));transform:translate(-50%,16px);background:var(--panel2);border:1px solid var(--border);padding:11px 18px;border-radius:12px;font-weight:800;font-size:14px;opacity:0;transition:opacity .2s,transform .2s;pointer-events:none;z-index:30;max-width:90vw;text-align:center}
+#toast{position:fixed;left:50%;bottom:calc(152px + env(safe-area-inset-bottom));transform:translate(-50%,16px);background:#16191D;color:#FFFFFF;border:1px solid #16191D;padding:11px 18px;border-radius:12px;font-weight:800;font-size:14px;opacity:0;transition:opacity .2s,transform .2s;pointer-events:none;z-index:30;max-width:90vw;text-align:center}
 #toast.show{opacity:1;transform:translate(-50%,0)}
 #toast.err{background:var(--amber);border-color:var(--amber);color:var(--ink)}
-.seg{display:flex;background:var(--panel);border:1px solid var(--border);border-radius:12px;padding:4px;margin-bottom:12px}
+.seg{display:flex;background:var(--panel2);border:1px solid var(--border);border-radius:12px;padding:4px;margin-bottom:12px}
 .seg button{flex:1;border:0;background:none;padding:11px;border-radius:9px;font-weight:800;color:var(--muted)}
-.seg button.on{background:var(--panel2);color:var(--accent)}
+.seg button.on{background:var(--accent);color:var(--on-accent)}
 .out .big{font-size:21px;word-break:break-all;line-height:1.45;min-height:62px;padding:4px 2px 8px}
 .row{display:flex;gap:10px}.row .btn{flex:1}
 .opt{display:flex;align-items:center;justify-content:space-between;gap:12px;min-height:54px;border-bottom:1px solid var(--border);font-weight:700}
 .opt:last-child{border-bottom:0}
 .opt select{width:auto;min-width:120px;padding:9px 12px}
 .opt output{color:var(--accent);font-weight:800;font-size:18px}
-.sw{-webkit-appearance:none;appearance:none;width:52px;height:32px;border-radius:16px;background:var(--panel2);border:1px solid var(--border);position:relative;padding:0;flex:none;transition:background .2s;margin:0}
-.sw::after{content:"";position:absolute;top:3px;left:3px;width:24px;height:24px;border-radius:50%;background:var(--muted);transition:left .2s,background .2s}
+.sw{-webkit-appearance:none;appearance:none;width:52px;height:32px;border-radius:16px;background:#D5D9DF;border:1px solid var(--border);position:relative;padding:0;flex:none;transition:background .2s;margin:0}
+.sw::after{content:"";position:absolute;top:3px;left:3px;width:24px;height:24px;border-radius:50%;background:#FFFFFF;box-shadow:0 1px 3px rgba(0,0,0,.25);transition:left .2s,background .2s}
 .sw:checked{background:var(--accent);border-color:var(--accent)}
-.sw:checked::after{left:23px;background:#06140F}
+.sw:checked::after{left:23px;background:#FFFFFF}
 input[type=range]{-webkit-appearance:auto;appearance:auto;padding:0;border:0;background:none;accent-color:var(--accent);height:34px}
 .stats{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:8px}
-.stat{background:var(--panel2);border:1px solid var(--border);border-radius:12px;padding:14px 6px;text-align:center}
+.stat{background:var(--bg);border:1px solid var(--border);border-radius:12px;padding:14px 6px;text-align:center}
 .stat b{display:block;font-size:30px;font-weight:800;line-height:1.1}
 .stat span{font-size:12px;color:var(--muted);font-weight:700}
 .stat.warn b{color:var(--amber)}
 .empty{text-align:center;color:var(--muted);padding:56px 20px;line-height:1.5}
-.empty svg{width:44px;height:44px;color:var(--border);margin-bottom:8px}
+.empty svg{width:44px;height:44px;color:#C3C8CF;margin-bottom:8px}
 </style>
 </head>
 <body>
@@ -126,7 +126,7 @@ input[type=range]{-webkit-appearance:auto;appearance:auto;padding:0;border:0;bac
 <input type="file" id="fileCsv" accept=".csv,text/csv,text/plain" hidden>
 <script>
 'use strict';
-const VERSION = '1.0.0';
+const VERSION = '1.1.0';
 const ITER = 600000;            // PBKDF2-SHA256 iterations
 const IDLE_MS = 120000;         // auto-lock after 2 minutes
 const CLIP_MS = 30000;          // clear clipboard after 30 s
@@ -754,25 +754,29 @@ document.addEventListener('keydown', e => {
 function makeIcon(n){
   const c = document.createElement('canvas'); c.width = c.height = n;
   const x = c.getContext('2d'), s = n / 100;
-  x.fillStyle = '#07080A'; x.fillRect(0, 0, n, n);
-  x.strokeStyle = '#3CC79A'; x.lineWidth = 7 * s; x.lineCap = 'round';
+  x.fillStyle = '#0E9F7A'; x.fillRect(0, 0, n, n);
+  x.strokeStyle = '#FFFFFF'; x.lineWidth = 7 * s; x.lineCap = 'round';
   x.beginPath(); x.arc(50 * s, 40 * s, 14 * s, Math.PI, 0); x.lineTo(64 * s, 50 * s); x.moveTo(36 * s, 40 * s); x.lineTo(36 * s, 50 * s); x.stroke();
-  x.fillStyle = '#3CC79A'; x.beginPath();
+  x.fillStyle = '#FFFFFF'; x.beginPath();
   const rx = 25 * s, ry = 48 * s, w = 50 * s, h = 34 * s, r = 7 * s;
   x.moveTo(rx + r, ry); x.arcTo(rx + w, ry, rx + w, ry + h, r); x.arcTo(rx + w, ry + h, rx, ry + h, r); x.arcTo(rx, ry + h, rx, ry, r); x.arcTo(rx, ry, rx + w, ry, r); x.fill();
-  x.fillStyle = '#07080A'; x.beginPath(); x.arc(50 * s, 62 * s, 5 * s, 0, Math.PI * 2); x.fill(); x.fillRect(47.5 * s, 62 * s, 5 * s, 10 * s);
+  x.fillStyle = '#0E9F7A'; x.beginPath(); x.arc(50 * s, 62 * s, 5 * s, 0, Math.PI * 2); x.fill(); x.fillRect(47.5 * s, 62 * s, 5 * s, 10 * s);
   return c.toDataURL('image/png');
 }
 function addLink(rel, href, extra){ const l = document.createElement('link'); l.rel = rel; l.href = href; if (extra) Object.assign(l, extra); document.head.appendChild(l); }
 function setupPWA(){
   const base = location.href.split('#')[0].split('?')[0], scope = base.replace(/[^/]*$/, '');
   const icon = makeIcon(512);
-  const m = {name:'Pocket Vault', short_name:'Vault', start_url:base, scope, display:'standalone', background_color:'#07080A', theme_color:'#07080A', icons:[{src:icon, sizes:'512x512', type:'image/png', purpose:'any'}]};
+  const m = {name:'Pocket Vault', short_name:'Vault', start_url:base, scope, display:'standalone', background_color:'#F5F6F8', theme_color:'#F5F6F8', icons:[{src:icon, sizes:'512x512', type:'image/png', purpose:'any'}]};
   addLink('manifest', 'data:application/manifest+json,' + encodeURIComponent(JSON.stringify(m)));
   addLink('apple-touch-icon', makeIcon(180));
   addLink('icon', makeIcon(64));
   if ('serviceWorker' in navigator && location.protocol === 'https:') navigator.serviceWorker.register('sw.js').catch(() => {});
 }
+
+/* ---------- no zoom (pinch / double-tap) ---------- */
+['gesturestart','gesturechange','gestureend'].forEach(ev => document.addEventListener(ev, e => e.preventDefault(), {passive:false}));
+document.addEventListener('touchmove', e => { if (e.touches.length > 1) e.preventDefault(); }, {passive:false});
 
 /* ---------- boot ---------- */
 (async function init(){
