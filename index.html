@@ -6,7 +6,7 @@
 <meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'unsafe-inline'; style-src 'unsafe-inline'; img-src data: blob:; manifest-src data:; worker-src 'self'; connect-src 'none'; form-action 'none'; base-uri 'none'">
 <meta name="referrer" content="no-referrer">
 <meta name="color-scheme" content="light">
-<meta name="theme-color" content="#F5F6F8">
+<meta name="theme-color" content="#E9ECF0">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="default">
@@ -14,7 +14,7 @@
 <meta name="format-detection" content="telephone=no">
 <title>Pocket Vault</title>
 <style>
-:root{--bg:#F5F6F8;--panel:#FFFFFF;--panel2:#EEF0F3;--border:#DFE2E7;--text:#16191D;--muted:#6B717A;--accent:#0E9F7A;--on-accent:#FFFFFF;--amber:#E3A04F;--ink:#1A1205;--danger:#D14552;--r:14px;color-scheme:light}
+:root{--bg:#E9ECF0;--panel:#FFFFFF;--panel2:#E4E7EC;--border:#C5CBD3;--text:#0E1114;--muted:#454B54;--accent:#0A7D60;--on-accent:#FFFFFF;--amber:#E3A04F;--ink:#1A1205;--danger:#B42B3A;--r:14px;color-scheme:light}
 *{box-sizing:border-box;-webkit-tap-highlight-color:transparent;touch-action:manipulation}
 html,body{margin:0;background:var(--bg);color:var(--text);font-family:"Nunito Sans","Avenir Next",Avenir,-apple-system,BlinkMacSystemFont,system-ui,sans-serif}
 body{min-height:100vh;min-height:100dvh;-webkit-text-size-adjust:100%;overscroll-behavior-y:none}
@@ -23,15 +23,15 @@ input,textarea,select,button{font:inherit;font-size:16px;color:inherit}
 input,textarea,select{width:100%;background:var(--panel);border:1px solid var(--border);border-radius:10px;padding:12px 14px;outline:none;-webkit-appearance:none;appearance:none}
 textarea{resize:vertical;line-height:1.4}
 input:focus,textarea:focus,select:focus{border-color:var(--accent)}
-input::placeholder,textarea::placeholder{color:#9AA0A8}
-label{display:block;font-size:13px;color:var(--muted);margin:14px 0 6px;font-weight:700}
+input::placeholder,textarea::placeholder{color:#6E747D}
+label{display:block;font-size:15px;color:var(--text);margin:16px 0 7px;font-weight:800}
 svg{width:22px;height:22px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;flex:none}
 svg .f{fill:currentColor;stroke:none}
-.top{position:sticky;top:0;z-index:5;display:flex;align-items:center;justify-content:space-between;padding:calc(env(safe-area-inset-top) + 8px) 8px 8px 16px;background:rgba(245,246,248,.92);-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px);border-bottom:1px solid var(--border)}
+.top{position:sticky;top:0;z-index:5;display:flex;align-items:center;justify-content:space-between;padding:calc(env(safe-area-inset-top) + 8px) 8px 8px 16px;background:rgba(233,236,240,.95);-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px);border-bottom:1px solid var(--border)}
 .top h1{font-size:24px;margin:0;font-weight:800;letter-spacing:-.01em}
 main{padding:14px 16px calc(100px + env(safe-area-inset-bottom));max-width:640px;margin:0 auto}
 .tabs{position:fixed;bottom:0;left:0;right:0;display:flex;background:rgba(255,255,255,.96);-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px);border-top:1px solid var(--border);padding-bottom:env(safe-area-inset-bottom);z-index:6}
-.tabs button{flex:1;background:none;border:0;padding:9px 0 7px;color:var(--muted);display:flex;flex-direction:column;align-items:center;gap:3px;font-size:11px;font-weight:800}
+.tabs button{flex:1;background:none;border:0;padding:9px 0 7px;color:var(--muted);display:flex;flex-direction:column;align-items:center;gap:3px;font-size:12px;font-weight:800}
 .tabs button.on{color:var(--accent)}
 .btn{display:flex;align-items:center;justify-content:center;gap:8px;min-height:50px;padding:0 18px;border-radius:12px;border:1px solid var(--border);background:var(--panel2);font-weight:800;width:100%;margin-top:10px}
 .btn svg{width:20px;height:20px}
@@ -43,34 +43,34 @@ main{padding:14px 16px calc(100px + env(safe-area-inset-bottom));max-width:640px
 .icon{width:44px;height:44px;flex:none;display:inline-flex;align-items:center;justify-content:center;background:transparent;border:0;border-radius:10px;color:var(--muted);padding:0}
 .icon:active{background:var(--panel2)}
 .icon.accent,.icon.on{color:var(--accent)}
-.card{background:var(--panel);border:1px solid var(--border);border-radius:var(--r);padding:16px;margin-bottom:12px;box-shadow:0 1px 2px rgba(16,24,40,.04)}
+.card{background:var(--panel);border:1px solid var(--border);border-radius:var(--r);padding:16px;margin-bottom:12px;box-shadow:0 1px 3px rgba(16,24,40,.10)}
 .card h3{margin:0 0 6px;font-size:17px;font-weight:800}
 .card p{margin:0 0 4px;line-height:1.45}
 .entry{display:flex;align-items:center;gap:12px;padding:10px 4px 10px 12px;margin-bottom:8px}
 .entry:active{background:var(--panel2)}
-.av{width:42px;height:42px;border-radius:11px;background:var(--panel2);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;font-weight:800;font-size:18px;color:var(--accent);flex:none}
+.av{width:42px;height:42px;border-radius:11px;background:#DDF2EB;border:1px solid #B5DECF;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:18px;color:var(--accent);flex:none}
 .entry .meta{flex:1;min-width:0}
-.entry .t{font-weight:800;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.entry .s{font-size:13px;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;margin-top:1px}
+.entry .t{font-weight:800;font-size:17px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.entry .s{font-size:15px;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;margin-top:1px}
 .acts{display:flex}
 .tag{display:inline-block;font-size:11px;font-weight:800;padding:2px 7px;border-radius:6px;margin:5px 4px 0 0}
 .tag.amber{background:var(--amber);color:var(--ink)}
-.sec{font-size:12px;font-weight:800;letter-spacing:.07em;text-transform:uppercase;color:var(--muted);margin:20px 2px 8px}
+.sec{font-size:13px;color:#2F343B;font-weight:800;letter-spacing:.07em;text-transform:uppercase;color:var(--muted);margin:20px 2px 8px}
 .banner{border-radius:12px;padding:13px 14px;margin:0 0 12px;font-size:14px;line-height:1.45}
 .banner.warn{background:var(--amber);color:var(--ink)}
 .chips{display:flex;gap:8px;margin-top:10px;overflow-x:auto;scrollbar-width:none}
 .chip{border:1px solid var(--border);background:var(--panel);border-radius:999px;padding:8px 14px;font-size:14px;font-weight:800;color:var(--muted);white-space:nowrap}
 .chip.on{border-color:var(--accent);color:var(--accent)}
-.chip.amber{color:#A8651A;border-color:#EBC594}
+.chip.amber{color:#7A4508;border-color:#D9A45E;background:#FFF6EA}
 .chip.amber.on{background:var(--amber);border-color:var(--amber);color:var(--ink)}
-.fab{position:fixed;right:18px;bottom:calc(78px + env(safe-area-inset-bottom));width:60px;height:60px;border-radius:18px;background:var(--accent);color:var(--on-accent);border:0;display:flex;align-items:center;justify-content:center;box-shadow:0 10px 24px rgba(14,159,122,.3);z-index:5}
+.fab{position:fixed;right:18px;bottom:calc(78px + env(safe-area-inset-bottom));width:60px;height:60px;border-radius:18px;background:var(--accent);color:var(--on-accent);border:0;display:flex;align-items:center;justify-content:center;box-shadow:0 10px 24px rgba(10,125,96,.35);z-index:5}
 .fab svg{width:28px;height:28px;stroke-width:2.5}
 .pwrow{display:flex;gap:2px;align-items:center}
 .pwrow input{flex:1;min-width:0}
 .mono{font-family:ui-monospace,"SF Mono",Menlo,monospace}
 .meter{height:6px;background:var(--panel2);border-radius:4px;margin-top:8px;overflow:hidden}
 .meter div{height:100%;width:0;transition:width .2s,background .2s}
-.small{font-size:13px}.muted{color:var(--muted)}.center{text-align:center}
+.small{font-size:15px;line-height:1.45}.muted{color:var(--muted)}.center{text-align:center}
 .err{color:var(--amber);font-weight:700;font-size:14px;min-height:20px;margin-top:10px}
 .auth{max-width:440px;margin:0 auto;padding:calc(env(safe-area-inset-top) + 44px) 20px calc(40px + env(safe-area-inset-bottom))}
 .auth h1{font-size:30px;font-weight:800;margin:18px 0 6px;letter-spacing:-.01em}
@@ -103,7 +103,7 @@ main{padding:14px 16px calc(100px + env(safe-area-inset-bottom));max-width:640px
 .opt:last-child{border-bottom:0}
 .opt select{width:auto;min-width:120px;padding:9px 12px}
 .opt output{color:var(--accent);font-weight:800;font-size:18px}
-.sw{-webkit-appearance:none;appearance:none;width:52px;height:32px;border-radius:16px;background:#D5D9DF;border:1px solid var(--border);position:relative;padding:0;flex:none;transition:background .2s;margin:0}
+.sw{-webkit-appearance:none;appearance:none;width:52px;height:32px;border-radius:16px;background:#B9C0C9;border:1px solid var(--border);position:relative;padding:0;flex:none;transition:background .2s;margin:0}
 .sw::after{content:"";position:absolute;top:3px;left:3px;width:24px;height:24px;border-radius:50%;background:#FFFFFF;box-shadow:0 1px 3px rgba(0,0,0,.25);transition:left .2s,background .2s}
 .sw:checked{background:var(--accent);border-color:var(--accent)}
 .sw:checked::after{left:23px;background:#FFFFFF}
@@ -111,8 +111,8 @@ input[type=range]{-webkit-appearance:auto;appearance:auto;padding:0;border:0;bac
 .stats{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:8px}
 .stat{background:var(--bg);border:1px solid var(--border);border-radius:12px;padding:14px 6px;text-align:center}
 .stat b{display:block;font-size:30px;font-weight:800;line-height:1.1}
-.stat span{font-size:12px;color:var(--muted);font-weight:700}
-.stat.warn b{color:var(--amber)}
+.stat span{font-size:13px;color:var(--muted);font-weight:700}
+.stat.warn b{color:#A35C0C}
 .empty{text-align:center;color:var(--muted);padding:56px 20px;line-height:1.5}
 .empty svg{width:44px;height:44px;color:#C3C8CF;margin-bottom:8px}
 </style>
@@ -126,7 +126,7 @@ input[type=range]{-webkit-appearance:auto;appearance:auto;padding:0;border:0;bac
 <input type="file" id="fileCsv" accept=".csv,text/csv,text/plain" hidden>
 <script>
 'use strict';
-const VERSION = '1.1.0';
+const VERSION = '1.2.0';
 const ITER = 600000;            // PBKDF2-SHA256 iterations
 const IDLE_MS = 120000;         // auto-lock after 2 minutes
 const CLIP_MS = 30000;          // clear clipboard after 30 s
@@ -754,20 +754,20 @@ document.addEventListener('keydown', e => {
 function makeIcon(n){
   const c = document.createElement('canvas'); c.width = c.height = n;
   const x = c.getContext('2d'), s = n / 100;
-  x.fillStyle = '#0E9F7A'; x.fillRect(0, 0, n, n);
+  x.fillStyle = '#0A7D60'; x.fillRect(0, 0, n, n);
   x.strokeStyle = '#FFFFFF'; x.lineWidth = 7 * s; x.lineCap = 'round';
   x.beginPath(); x.arc(50 * s, 40 * s, 14 * s, Math.PI, 0); x.lineTo(64 * s, 50 * s); x.moveTo(36 * s, 40 * s); x.lineTo(36 * s, 50 * s); x.stroke();
   x.fillStyle = '#FFFFFF'; x.beginPath();
   const rx = 25 * s, ry = 48 * s, w = 50 * s, h = 34 * s, r = 7 * s;
   x.moveTo(rx + r, ry); x.arcTo(rx + w, ry, rx + w, ry + h, r); x.arcTo(rx + w, ry + h, rx, ry + h, r); x.arcTo(rx, ry + h, rx, ry, r); x.arcTo(rx, ry, rx + w, ry, r); x.fill();
-  x.fillStyle = '#0E9F7A'; x.beginPath(); x.arc(50 * s, 62 * s, 5 * s, 0, Math.PI * 2); x.fill(); x.fillRect(47.5 * s, 62 * s, 5 * s, 10 * s);
+  x.fillStyle = '#0A7D60'; x.beginPath(); x.arc(50 * s, 62 * s, 5 * s, 0, Math.PI * 2); x.fill(); x.fillRect(47.5 * s, 62 * s, 5 * s, 10 * s);
   return c.toDataURL('image/png');
 }
 function addLink(rel, href, extra){ const l = document.createElement('link'); l.rel = rel; l.href = href; if (extra) Object.assign(l, extra); document.head.appendChild(l); }
 function setupPWA(){
   const base = location.href.split('#')[0].split('?')[0], scope = base.replace(/[^/]*$/, '');
   const icon = makeIcon(512);
-  const m = {name:'Pocket Vault', short_name:'Vault', start_url:base, scope, display:'standalone', background_color:'#F5F6F8', theme_color:'#F5F6F8', icons:[{src:icon, sizes:'512x512', type:'image/png', purpose:'any'}]};
+  const m = {name:'Pocket Vault', short_name:'Vault', start_url:base, scope, display:'standalone', background_color:'#E9ECF0', theme_color:'#E9ECF0', icons:[{src:icon, sizes:'512x512', type:'image/png', purpose:'any'}]};
   addLink('manifest', 'data:application/manifest+json,' + encodeURIComponent(JSON.stringify(m)));
   addLink('apple-touch-icon', makeIcon(180));
   addLink('icon', makeIcon(64));
